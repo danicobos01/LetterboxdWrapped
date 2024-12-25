@@ -33,7 +33,7 @@ def mapamundi(dic):
 def top5Generos(dic):
     df = pd.DataFrame(list(dic.items()), columns=["Genre", "Films Watched"])
     df = pd.to_numeric(df["Films Watched"], errors='coerce')
-    df = df.nlargest(5, "Films Watched").reset_index(drop=True)
+    df = df.nlargest(5, "Films Watched", keep="first").reset_index(drop=True)
     return df
 
 def top5Idiomas(dic):
