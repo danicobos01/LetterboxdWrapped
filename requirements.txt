@@ -1,9 +1,9 @@
 matplotlib 
 plotly
-from concurrent.futures import ThreadPoolExecutor, as_completed
+concurrent.futures
 requests
-from bs4 import BeautifulSoup
+bs4
 threading
-from collections import defaultdict
+collections
 re
 tmdbsimple as tmdb
