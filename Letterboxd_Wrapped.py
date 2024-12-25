@@ -191,7 +191,7 @@ def main_function(dfs):
 
     st.session_state.directors_dict = {key: (value[0], value[1] / value[0]) for key, value in st.session_state.directors_dict.items()}
     st.session_state.actors_dict = {key: (value[0], value[1] / value[0]) for key, value in st.session_state.actors_dict.items()}
-    del st.session_state.actors_dict['Show All…']
+    # del st.session_state.actors_dict['Show All…']
     st.session_state.dfs[0]["valoracion_media"] = st.session_state.dfs[0]["Letterboxd URI"].map(st.session_state.link_to_avg)
 
 def transform_df(dfs):  
