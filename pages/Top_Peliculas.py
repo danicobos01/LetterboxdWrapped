@@ -14,7 +14,8 @@ def getTop10(df):
     df_res = df.nlargest(10, 'valoracion_media')[['Name','Year', 'valoracion_media', 'Rating', 'Letterboxd URI']].reset_index(drop=True)
     df_res = df_res.rename(columns={'valoracion_media': 'Average Rating', 'Letterboxd URI' : 'Letterboxd URL'})
     df_res['Rating'] = df_res['Rating'].fillna(0)
-    df_res['Year'] = df_res['Year'].astype(str)
+    df_res['Year'] = df_res['Year'].astype(int).astype(str)
+    df_res['Year'] = df_res['Year'].apply(lambda x: str(int(float(x))) if isinstance(x, (int, float)) else str(x))
     st.write("**Las 10 películas con mayor valoración media que has visto**")
     st.dataframe(df_res)
 
@@ -26,7 +27,7 @@ def getWorst5(df):
     )
     df_res['Rating'] = df_res['Rating'].fillna(0)
     df_res = df_res.rename(columns={'valoracion_media': 'Average Rating', 'Letterboxd URI' : 'Letterboxd URL'})
-    df_res['Year'] = df_res['Year'].astype(str)
+    df_res['Year'] = df_res['Year'].astype(int).astype(str)
     st.write("**Las 5 películas con peor valoración que has visto**")
     st.dataframe(df_res)
 
@@ -117,6 +118,7 @@ def getRewatches(df):
     st.altair_chart(final_chart, use_container_width=True)
 
 def getDistrib(df):
+    # df = df.dropna(subset=['Year'])
     counts, bins = np.histogram(df['Year'], bins=20)
     
     # Redondear los valores de los bordes a enteros y crear etiquetas de rango
@@ -148,8 +150,8 @@ def get5stars(df):
     df_res = df[df['Rating'] == 5]
     df_res = df_res[['Name','Year', 'valoracion_media', 'Rating', 'Letterboxd URI']].reset_index(drop=True)
     df_res = df_res.rename(columns={'valoracion_media': 'Average Rating', 'Letterboxd URI' : 'Letterboxd URL'})
-    df_res['Rating'] = df_res['Rating'].fillna(0)
-    df_res['Year'] = df_res['Year'].astype(str)
+    df_res['Average Rating'] = df_res['Average Rating'].fillna(0)
+    df_res['Year'] = df_res['Year'].astype(int).astype(str)
     st.write("**Las películas que has valorado con 5 estrellas**")
     st.dataframe(df_res)
 
@@ -162,7 +164,7 @@ def getLessPopular(df):
     df_res = df_res[df_res['Popularity'] > -1]
 
     df_res = df_res.rename(columns={'valoracion_media': 'Average Rating', 'Letterboxd URI' : 'Letterboxd URL'})
-    df_res['Year'] = df_res['Year'].astype(str)
+    df_res['Year'] = df_res['Year'].astype(int).astype(str)
     df_res = df_res.nsmallest(10, 'Popularity')[['Name','Year', 'Average Rating', 'Rating', 'Letterboxd URL']].reset_index(drop=True)
 
     st.write("**Las 10 películas menos populares que has visto**")
@@ -173,7 +175,7 @@ def getMorePopular(df):
     df_res['Popularity'] = df['Letterboxd URI'].map(st.session_state.films_popularity)
     df_res['Rating'] = df_res['Rating'].fillna(0)
     df_res = df_res.rename(columns={'valoracion_media': 'Average Rating', 'Letterboxd URI' : 'Letterboxd URL'})
-    df_res['Year'] = df_res['Year'].astype(str)
+    df_res['Year'] = df_res['Year'].astype(int).astype(str)
     df_res = df_res.nlargest(10, 'Popularity')[['Name','Year', 'Average Rating', 'Rating', 'Letterboxd URL']].reset_index(drop=True)
 
     st.write("**Las 10 películas más populares que has visto**")
@@ -185,6 +187,8 @@ def app():
     # Acceder a la variable definida en app.py a través de st.session_state
     if 'dfs' in st.session_state and st.session_state.finished == True:
         st.write(f"**Este año has visto {len(st.session_state.dfs[0])} películas en total**")
+        st.session_state.dfs[0] = st.session_state.dfs[0].dropna(subset=['Year'])
+        # st.session_state.dfs[0]['Year'] = st.session_state.dfs[0]['Year'].astype(str)
         getTop10(st.session_state.dfs[0])
         getWorst5(st.session_state.dfs[0])
         getDecadas(st.session_state.dfs[0])
