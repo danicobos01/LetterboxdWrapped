@@ -1,9 +1,5 @@
-matplotlib 
+matplotlib
 plotly
-concurrent.futures
 requests
-bs4
-threading
-collections
-re
-tmdbsimple as tmdb
+beautifulsoup4
+tmdbsimple
