@@ -220,7 +220,7 @@ def transform_df(dfs):
 
 # Título de la aplicación
 st.title("Letterboxd Wrapped")
-
+st.write("Letterboxd Wrapped de 2024. Calcula sólo tus estadísticas de 2024, de momento")
 
 
 # Subida de múltiples archivos
