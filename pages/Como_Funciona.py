@@ -7,6 +7,6 @@ def app():
     st.image("tutoletterboxd.PNG")
     st.write("2. Descomprimes el ZIP y en la página introduces sólo los dos archivos mencionados:")
     st.image("tutoletterboxd2.PNG")
-    st.write("3. Una vez se cargan, pulsas el botón y termina de cargar ya puedes acceder a las pestañas de la derecha!")
+    st.write("3. Una vez se cargan, pulsas el botón y termina de cargar ya puedes acceder a las pestañas de la izquierda!")
 
 app()
